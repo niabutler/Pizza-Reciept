@@ -10,6 +10,10 @@ def dashline():
     print("-" * 50)
 
 
+def dotline():
+    print("." * 50)
+
+
 def print_menu(m):
     for i in range(0, len(m)):
         output = "{}: {}".format(m[i][0], m[i][1])
@@ -21,40 +25,80 @@ def print_pizzas(p):
     for i in range (0,len(p)):
         output = ("${}0   {}".format(p[i][0], p[i][1]))
         print(output)
-    input = get_validated_string("Please press Q to quit to main menu: -> ", 1, 1).upper()
-    if input == "Q":
-        main_function()
-    else:
-        print("You have not entered a valid input")
 
 
+def pizza_options(p):
+    print("Pizza Menu")
+    for i in range(0, len(p)):
+        output = "{}:  ${}0 {} - {}".format(i+1, p[i][0], p[i][1], p[i][2])
+        print(output)
+
+
+def print_order(co):
+    for i in range(0, len(co)):
+        output = "x{} @${}0 {}".format(co[i][0], co[i][1], co[i][2])
+        print(output)
+
+
+def add_to_order(p, co):
+    pizza_options(p)
+    starline()
+    print("Add to order: ")
+    run = False
+    while run == False:
+        input_1 = get_validated_integer("Please enter an item number from the menu above: -> ", 0, len(p)-1)
+        chosen_pizza = p[input_1][1]
+        input_2 = get_validated_integer("How many {} pizza's would you like? -> ".format(chosen_pizza), 1, 10)
+        temp_list = (input_2, p[input_1][0], chosen_pizza)
+        co.append(temp_list)
+        choice = get_validated_string("Add another pizza? y/n : ", 1, 1).upper()
+        if choice == "Y":
+            continue
+        elif choice == "N":
+            starline()
+            print("Your order:")
+            print_order(co)
+            return None
+        else:
+            print("Your input is invalid please choose y/n.")
 
 
 def main_function():
     starline()
     print("Main Menu")
     pizzas = [
-        [18.50, "BBQ Chicken"],
-        [18.50, "Hawaiian"],
-        [18.50, "Cheese and Garlic"],
-        [25.50, "Chicken and Brie"],
-        [25.50, "Steak and Kumara"]
+        [18.50, "BBQ Chicken", "Description"],
+        [18.50, "Hawaiian", "Description"],
+        [18.50, "Cheese and Garlic", "Description"],
+        [25.50, "Chicken and Brie", "Description"],
+        [25.50, "Steak and Kumara", "Description"]
     ]
+
     customer_order = []
+
     my_menu = [
         ("M", "See Menu"),
+        ("A", "Add to order"),
         ("Q", "Quit")
-    ]
-    print_menu(my_menu)
-    choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
-
-    if choice == "M":
-        starline()
-        print_pizzas(pizzas)
-    elif choice == "Q":
-        print("Thank you for choosing Pete's Pizza's! Have a nice evening :)")
-    else:
-        print("Invalid entry, please try again.")
+        ]
+    run = True
+    while run is True:
+        for i in range(0, len(my_menu)):
+                output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
+                print(output)
+        choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
+        if choice == "M":
+            starline()
+            print_pizzas(pizzas)
+            starline()
+        elif choice == "Q":
+            print("Thank you for choosing Pete's Pizza's! Have a nice evening :)")
+        elif choice == "A":
+            starline()
+            add_to_order(pizzas, customer_order)
+            starline()
+        else:
+            print("Invalid entry, please try again.")
 
 
 

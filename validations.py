@@ -19,6 +19,12 @@ def get_validated_integer(m, min, max):
         else:
             return number
 
+def get_string(m):
+    while True:
+        string = input(m)
+        return string
+
+
 def get_validated_string(m, min, max):
     """
     to ensure a valid string is returned,
@@ -31,9 +37,48 @@ def get_validated_string(m, min, max):
         if len(string) < min:
             print("You have not entered enough characters")
         elif len(string) > max:
-            print("You have entered too many characters")
+            print("You can only enter {} character/s".format(max))
+            return None
         else:
             return string
+
+
+def single_entry_integer(m, min, max):
+    while True:
+        try:
+            number = int(input(m))
+        except ValueError:
+            print("Please enter a number.")
+            continue
+        if number < min:
+            print("Your entry is too small")
+            return None
+        elif number > max:
+            print("You can only up to 5 of one pizza")
+        else:
+            return number
+
+
+def conformation_integer(m, min, max):
+    run = True
+    while True:
+        try:
+            number = int(input(m))
+        except ValueError:
+            print("This is not a valid entry.")
+            continue
+        if number < min:
+            print("Your entry is too small")
+            continue
+        elif number > max:
+            print("Are you sure you want {} pizza's".format(number))
+            choice = get_validated_string("Yes - continue (enter) OR No - change my order (c)", 0, 1).upper()
+            if choice == ():
+                continue
+            elif choice == "C":
+                run = False
+        else:
+            return number
 
 
 
@@ -41,6 +86,6 @@ def get_validated_string(m, min, max):
 
 
 if __name__ =="__main__":
-    get_validated_string("Please enter your option: -> ", 1, 5)
+    conformation_integer("Please enter your pizza option: -> ", 1, 5)
 
 
