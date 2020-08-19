@@ -33,20 +33,21 @@ def get_validated_string(m, min, max):
     """
     while True:
         string = input(m)
-        #input = input.replace(" ", "")
+        string = string.replace(" ", "")
         if len(string) < min:
             print("You have not entered enough characters")
         elif len(string) > max:
             print("You can only enter {} character/s".format(max))
-            return None
         else:
             return string
 
 
+#currently not being used - delete later
 def single_entry_integer(m, min, max):
     while True:
         try:
             number = int(input(m))
+            number = number.replace(" ", "")
         except ValueError:
             print("Please enter a number.")
             continue
@@ -59,11 +60,13 @@ def single_entry_integer(m, min, max):
             return number
 
 
-def conformation_integer(m, min, max):
+def get_integer_conformation(m, min, max):
     run = True
     while True:
         try:
-            number = int(input(m))
+            number = input(m)
+            number = number.replace(" ", "")
+            number = int(number)
         except ValueError:
             print("This is not a valid entry.")
             continue
@@ -72,20 +75,16 @@ def conformation_integer(m, min, max):
             continue
         elif number > max:
             print("Are you sure you want {} pizza's".format(number))
-            choice = get_validated_string("Yes - continue (enter) OR No - change my order (c)", 0, 1).upper()
-            if choice == ():
-                continue
-            elif choice == "C":
-                run = False
+            choice = get_validated_string("Press <enter> to confirm or any other key to re-enter", 0, 1).upper()
+            if choice == "":
+                return number
         else:
             return number
 
 
 
 
-
-
 if __name__ =="__main__":
-    conformation_integer("Please enter your pizza option: -> ", 1, 5)
+    get_integer_conformation("Please enter your number of pizzas : -> ", 1, 9)
 
 
