@@ -27,13 +27,13 @@
 			</div>
 			<div class="nav-bar">
 				<ul class="nav">
-					<li><a href="#">Sprint 1</a></li>
-					<li><a href="#">Sprint 2</a></li>
-					<li><a href="#">Sprint 3</a></li>
-                    <li><a href="#">Sprint 4</a></li>
-                    <li><a href="#">Sprint 5</a></li>
-                    <li><a href="#">Sprint 6</a></li>
-                    <li><a href="#">Relevant Implications</a></li>
+					<li><a href="#1">Sprint 1</a></li>
+					<li><a href="#2">Sprint 2</a></li>
+					<li><a href="#3">Sprint 3</a></li>
+                    <li><a href="#4">Sprint 4</a></li>
+                    <li><a href="#5">Sprint 5</a></li>
+                    <li><a href="#6">Sprint 6</a></li>
+                    <li><a href="#7">Relevant Implications</a></li>
 				</ul>
 			</div>
 			<div class="content">
@@ -47,13 +47,13 @@
 					<hr>
                 <h3> Project backlog - overall overview and ideas</h3>
                 <p> Not everything on the project back log can and will be completed however all of my ideas are in one place. They are prioritised in order of importance to the program.</p>
-                <img class="img-responsive" src="assets/img/project_backlog.jpg" alt="">
+                <img class="img-responsive" src="assets/img/project_backlog.jpg" alt=""><br>
 
     <!-- Heading levels -->
     
     
 <!-- Sprint one --------------------------------------------------------------------------->
-<h1>Sprint One</h1>
+<h1 id="1">Sprint One</h1>
     <h4>Aim: The aim for sprint one is to create a basic programme where the user can choose to see the pizza menu or quit the program. If they choose to see the pizza menu, they are also able to quit back to the main menu.</h4>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog:</h3>
@@ -73,7 +73,7 @@
               <br>  <hr> <br>
     
 <!-- Sprint Two --------------------------------------------------------------------------->
-    <h1>Sprint Two</h1>
+    <h1 id="2">Sprint Two</h1>
     <h3>Aim: The aim for sprint two is to add an 'add to order' option to the main menu. The user can add different flavoured pizza's and the amount to their order and then view their order afterwards, as well as being able to view their order from the main menu. </h3>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog:</h3>
@@ -100,7 +100,7 @@
                 <br>  <hr> <br>
                 
 <!-- Sprint Three --------------------------------------------------------------------------->
-    <h1>Sprint Three</h1>
+    <h1 id="3">Sprint Three</h1>
     <h4>Aim: For sprint 3, I would like to change the layout of my code by making the main menu a loop function. This means that there will be less room for errors in future versions of my program, because the program will always come back to the main menu instead of getting stuck inside a function.</h4>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog</h3>
@@ -123,17 +123,25 @@
                 
                 
  <!-- Sprint Four --------------------------------------------------------------------------->               
-    <h1>Sprint Four</h1>
+    <h1 id="4">Sprint Four</h1>
     <h3>Aim: To create validation functions which allow the user to make mistakes in the program without it crashing. I would like to create a function to get a string, which strips it of spaces and capitalises it before giving it to the rest of the function, as well as a get string function where only 1 character can be entered. I would also like to make a function to get an integer, with parametre boundaries and a message. </h3>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog for different validations:</h3>
                 <p> These are the different validations I would like to create in order to stop any confusion for the user and to stop the program crashing. </p>
             <img class="img-responsive" src="assets/img/sprint_4_kanban.jpg" alt="">   
                 <br>
-                <h4> Why Psuedo code?</h4>
-                <p>Psuedo code is a more natural language plan of how I want the program to run. It makes it easier to see the whole picture without having to fully write out all of the code. DOing this can help </p>
-    <h3>Planning the validations (Psuedo Code):</h3>
-                <img class="img-responsive" src="assets/img/validations_psuedo.jpg" alt="">
+                
+                
+                <div class="col-container">
+                <div class="col">
+               <img class="img-responsive" src="assets/img/validations_psuedo.jpg" alt="">
+                <p>Psuedocode for validations</p>
+                </div>
+                 <div class="col">
+                 <h4> Why Psuedocode?</h4>
+                <p>Psuedocode is a more natural language plan of how I want the program to run. It outlines the basic structure of the code without having to write out all of the finer details.</p>
+                    </div>
+                </div>
                 <br>
     <h3>Testing Validations (get_integer_conformation):</h3>
                 <img class="img-responsive" src="assets/img/get_integer_conformation_test.jpg" alt="">
@@ -152,7 +160,7 @@
                 
                 
 <!-- Sprint Five --------------------------------------------------------------------------->            
-                <h1>Sprint Five</h1>
+                <h1 id="5">Sprint Five</h1>
     <h3>Aim: In sprint 5, I would like to create a function which calculates the total cost and GST from the customer order, and prints it in a readable manner like a receipt. </h3>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog</h3>
@@ -172,18 +180,32 @@
                 
                 
     <!-- Sprint Six --------------------------------------------------------------------------->             
-    <h1>Sprint Six</h1>
+    <h1 id="6">Sprint Six</h1>
     <h3>Aim: In sprint 6, I would like to create an update function where the user can review their order and make changes to it such as changing the amount of a flavour or pizza or adding and deleting pizza's from their order. </h3>
     <p>-------------------------------</p>
     <h3>Sprint plan and backlog</h3>
                 <img class="img-responsive" src="assets/img/sprint_5_kanban.jpg" alt="">
-    <h3>Creating the function</h3>
-                <img class="img-responsive" src="assets/img/sprint_5_calculator_function.jpg" alt="">
-                <p> I decided to include both the total price calculator function and the GST function in one because it was easier than making them seperate. This saved me space and time because all I had to do was add an extra line of code. </p>
-                <img class="img-responsive" src="assets/img/sprint_5_new_print_order.jpg" alt=""> <p> coloumn 2</p>
+    <h3>Creating two designs and choosing - exploring one option over another</h3>
+                <p> For the update function I figured there were a few different ways to carry out the code, each one slightly different and incorporating varied ways of ending up with the same outcome. As a class we explored one option and wrote out a plan. I then designed my own plan as well, however I decided to combine the best components of both to create the best function. I wanted to make the function as simple as possible so I decided to create a second menu off the main menu under 'Review'. When this option is chosen, it prints out the customer order and then a second menu which has the option to change a quantity, remove a pizza or add a pizza. I decided to have a 'Change Quantity' option instead of an add or subtract a pizza to simplify the process and to remove any unecessary confusion with maths.  In version/plan 2 I created a design which asked for the index number of a row before asking what the user would like to do with it eg. add a pizza or change quantity. For me this didn't flow nicely and I though it would confuse user because they don't know what the options are before choosing to change something. I incorporated this into my version 3 by printing the option menu before requesting the index number. All three plans/versions included conformation messages which are important incase the user makes a mistake. My validations such as 'get_validated_integer' and get_integer_conformation' can also help with this problem. </p>
+                
+                <div class="col-container">
+                <div class="col">
+               <img class="img-responsive" src="assets/img/sprint_6_option2.jpg" alt="">
+                <p>Option 1, discussed with the class</p>
+                </div>
+                 <div class="col">
+                <img class="img-responsive" src="assets/img/sprint_6_option1.jpg" alt="">
+                <p>Option 2, my second option which I created</p>
+                </div>
+                    
+                <img class="img-responsive" src="assets/img/sprint_6_finalplan3.jpg" alt="">
+                <p style="text-align: center;">Option 3, my final option combining option one and two</p>
+                
+                
+                <p> Insert plans for all 3 versions</p>
     <h3>Testing the function</h3>
-                <img class="img-responsive" src="assets/img/sprint_5_print_order_test.jpg" alt="">
-                <p> Here is a test of my new and improved print order function. It now includes the calculator and prints out the quantity, flavour, price, sub total, total price and included GST of the pizza's in the customer order. I have added a test option in my main menu in order to test my program without having to add new pizza's to my order every time I want to use my print order function before it's fully polished.</p>
+                
+                <p> Here is ......</p>
     <h3>Relevant Implications Summary</h3>
     <p>-------------------------------</p>
     <h3>Reflection - What could I do better next time, how can I make it better etc.  </h3>

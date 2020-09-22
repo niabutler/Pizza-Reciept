@@ -31,6 +31,10 @@ p
 	line-height: 1.5;
 }
 
+.col p{
+    text-align: center;
+}
+
 blockquote
 {
 	padding: 1em 2em;
@@ -72,7 +76,7 @@ th, td
 a:link { color: royalblue; }
 a:visited { color: purple; }
 a:focus { color: black; }
-a:hover { color: green; }
+a:hover { color: rgb(255,233,0); }
 a:active { color: red; }
 
 /* -----------------------
@@ -98,7 +102,7 @@ Layout styles
 .nav-bar
 {
 	background: #000;
-	padding: 0;
+	padding: 5px;
 }
 
 .content { padding: 1em 1.25em; }
@@ -116,7 +120,7 @@ Nav
 
 .nav
 {
-	margin: 0;
+	margin: auto;
 	padding: 0;
 	list-style: none;
 }
@@ -125,12 +129,13 @@ Nav
 {
 	display: inline;
 	margin: 0;
+    padding: 1.4%;
 }
 
 .nav a
 {
 	display: block;
-	padding: .7em 1.25em;
+	padding: 1.4%;
 	color: #fff;
 	text-decoration: none;
 	border-bottom: 1px solid gray;
@@ -148,13 +153,14 @@ Nav
 .nav a:hover
 {
 	color: white;
-	background-color: green;
+	background-color: rgb(255,200,0);
+    padding: 1.4%;
 }
 
 .nav a:active
 {
 	color: white;
-	background-color: red;
+	background-color: rgb(255,215,0);
 }
 /* -----------------------
 column styles

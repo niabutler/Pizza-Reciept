@@ -153,12 +153,15 @@ def print_order(co):
         print("Your order is empty, start ordering!")
         return None
     print("Your order:")
-    titles = "{:5}    {:10} {:15}".format("Qty", "Price", "Flavour")
-    print(titles)
     dashline()
+    titles = "{:<5}  {:<20}  {:12} {}".format("Qty", "Flavour", "Price", "SUBTOTAL")
+    print(titles)
     for i in range(0, len(co)):
-        output = "x{:<5} @ ${:<10.2f} {:15}".format(co[i][0], co[i][1], co[i][2])
+        sub_total = co[i][0] * co[i][1]
+        output = "x{:<5} {:<20} @ ${:<10.2f} ${:3.2f}".format(co[i][0], co[i][2], co[i][1], sub_total)
         print(output)
+    dashline()
+    receipt_calc(co)
 
 def change_quantity():
     co = [
@@ -168,14 +171,38 @@ def change_quantity():
         [25.50, 1, "Chicken and Brie", "Description"],
         [25.50, 2, "Steak and Kumara", "Description"]
     ]
-    index = get_validated_integer("Please enter the index number of the pizza you would like to change the quantity of: -> ", 1, len(co)-1)
-    print("Your currently have {} {} pizza/s in your order".format(co[index-1][1], co[index-1][2]))
-    new_quan = get_integer_conformation("Please enter your updated quantity of {} pizza's: -> ".format(co[index-1][2]), 1, 25)
-    print("Your order now has {} {} pizza's".format(new_quan, co[index-1][2]))
-    co[index - 1][2] = new_quan
+    index = get_validated_integer(
+        "Please enter the index number of the pizza you would like to change the quantity of: -> ", 1, len(co)-1)
+    print("Your currently have {} {} pizza/s in your order".format( co[index-1][1], co[index-1][2]))
+    new_quan = get_integer_conformation(
+        "Please enter your updated quantity of {} pizza's: -> ".format(co[index-1][1]), 1, 25)
+    print("Your order now has {} {} pizza's".format(new_quan, co[index-1][1]))
+    co[index - 1][1] = new_quan
+    return None
+
+def remove_pizza():
+    co = [
+        [3, 18.50, "BBQ Chicken", "Description"],
+        [2, 18.50, "Hawaiian", "Description"],
+        [3, 18.50, "Cheese and Garlic", "Description"],
+        [1, 25.50, "Chicken and Brie", "Description"],
+        [2, 25.50, "Steak and Kumara", "Description"]
+    ]
+    index = get_validated_integer(
+        "Please enter the index number of the pizza flavour you would like to remove from your order: -> ", 1, len(co) - 1)
+    print("Your currently have {} {} pizza/s in your order".format(co[index - 1][2], co[index - 1][1]))
+    choice = get_validated_string(
+        "Are you sure you would like to remove all {} pizza's from your order? Y/N -> ".format(co[index - 1][1]), 1, 1).upper()
+    if choice == "Y":
+        co.pop(index - 1)
+        print_order(co)
+    elif choice == "N":
+        return None
+    else:
+        print("Please enter Y yes or N no: -> ")
 
 
-def update_menu(co):
+def update_menu(p, co):
     my_menu = [
         ("C", "Change a quantity"),
         ("R", "Remove a Pizza"),
@@ -196,17 +223,35 @@ def update_menu(co):
         choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
         if choice == "C":
             starline()
+            change_quantity()
             starline()
         elif choice == "R":
             starline()
+            remove_pizza()
         elif choice == "A":
             starline()
+            add_to_order(p, co)
         elif choice == "Q":
             starline()
         else:
             return None
 
 
+def print_order_with_indexes(co):
+    if len(co) == 0:
+        print("Your order is empty, start ordering!")
+        return None
+    dotline()
+    print("Your order:")
+    dashline()
+    titles = "{:3} {:<5}  {:<20}  {:12} {}".format("Index", "Qty", "Flavour", "Price", "SUBTOTAL")
+    print(titles)
+    for i in range(0, len(co)):
+        sub_total = co[i][0] * co[i][1]
+        output = "{:3} x{:<5} {:<20} @ ${:<10.2f} ${:3.2f}".format(co[i], co[i][0], co[i][2], co[i][1], sub_total)
+        print(output)
+    dashline()
+    receipt_calc(co)
 
 
 #print_pizzas(pizzas)
@@ -215,5 +260,6 @@ def update_menu(co):
 #add_to_order()
 #print_order(customer_order)
 #receipt_calc(customer_order)
-change_quantity()
+#change_quantity()
+remove_pizza()
 
