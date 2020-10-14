@@ -153,6 +153,7 @@ def print_order(co):
         print("Your order is empty, start ordering!")
         return None
     print("Your order:")
+    print("Name: {}".format(co[i][3]))
     dashline()
     titles = "{:<5}  {:<20}  {:12} {}".format("Qty", "Flavour", "Price", "SUBTOTAL")
     print(titles)
@@ -254,6 +255,70 @@ def print_order_with_indexes(co):
     receipt_calc(co)
 
 
+def update_menu(p, co):
+    my_menu = [
+        ("C", "Change a quantity"),
+        ("R", "Remove a Pizza"),
+        ("A", "Add a pizza"),
+        ("Q", "Main Menu")
+    ]
+    run = True
+    while run is True:
+        print("Review Order")
+        print_order_with_indexes(co)
+        # print main menu
+        for i in range(0, len(my_menu)):
+            output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
+            print(output)
+        # ask for user's choice as input
+        choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
+        if choice == "C":
+            starline()
+            change_quantity(co)
+            starline()
+        elif choice == "R":
+            starline()
+            remove_pizza(co)
+        elif choice == "A":
+            starline()
+            add_to_order(p, co)
+        elif choice == "Q":
+            starline()
+        else:
+            return None
+
+def checkout():
+    my_menu = [
+        ("P", "Pick up"),
+        ("D", "Delivery")
+        ]
+    run = True
+    while run is True:
+        for i in range(0, len(my_menu)):
+            output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
+            print(output)
+        choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
+        if choice == "P":
+            name = get_validated_string("Please enter your name: -> ", 1, 15).upper()
+            number = get_validated_string("Please enter a contact number (mobile): -> ", 1, 15)
+            cd1 = [name, number]
+            print(cd1)
+        elif choice == "D":
+            name = get_validated_string("Please enter your name: -> ", 1, 15).upper()
+            mobile = get_validated_string("Please enter a contact number (mobile): -> ", 1, 12)
+            number = get_validated_string("Please enter your street number: ", 1, 3)
+            street = get_validated_string("Please enter your street name: ", 3, 15)
+            suburb = get_validated_string("Please enter your suburb: ", 3, 15)
+            postcode = get_validated_string("Please enter your postcode: ", 4, 4)
+            cd2 = [name, mobile, number, street, suburb, postcode]
+            print(cd2)
+        else:
+            print("Please enter P or D")
+
+
+
+
+
 #print_pizzas(pizzas)
 #main_function()
 #pizza_options(pizzas)
@@ -261,5 +326,7 @@ def print_order_with_indexes(co):
 #print_order(customer_order)
 #receipt_calc(customer_order)
 #change_quantity()
-remove_pizza()
+#remove_pizza()
+#update_menu(pizzas, customer_order)
+checkout()
 

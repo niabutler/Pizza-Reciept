@@ -39,7 +39,8 @@ def pizza_options(p):
     print("Pizza Menu")
     dotline()
     # print headings above the information to make it easier to understand
-    titles = "{:5}   {:22} {:14}  {}".format("Item no.", "Name", "Description", "Price")
+    titles = "{:5}   {:22} {:14}  {}".format\
+        ("Item no.", "Name", "Description", "Price")
     print(titles)
     # print in order: index number +1, space, name, space, description and price
     for i in range(0, len(p)):
@@ -48,10 +49,14 @@ def pizza_options(p):
 
 
 def receipt_calc(co):
+    # set total cost to 0
     total_cost = 0
     for i in range(0, len(co)):
+        # the total for each row is the price times the quantity
         sub_total = co[i][0] * co[i][1]
+        # total cost is all of the sub totals added together
         total_cost += sub_total
+        # print out total cost and gst
     print("{:29}Total Cost: ${:5.2f} ".format("", total_cost))
     print("{:36}GST: ${:5.2f} ".format("", total_cost*(3/23)))
     dashline()
@@ -59,15 +64,20 @@ def receipt_calc(co):
 
 def print_order(co):
     if len(co) == 0:
+        # print message if order is empty
         print("Your order is empty, start ordering!")
+        starline()
         return None
+    # print dotted line
     dotline()
     print("Your order:")
     dashline()
+    # print order headings
     titles = "{:<5}  {:<20}  {:12} {}".format("Qty", "Flavour", "Price", "SUBTOTAL")
     print(titles)
     for i in range(0, len(co)):
         sub_total = co[i][0] * co[i][1]
+        # print order
         output = "x{:<5} {:<20} @ ${:<10.2f} ${:3.2f}".format(co[i][0], co[i][2], co[i][1], sub_total)
         print(output)
     dashline()
@@ -75,41 +85,55 @@ def print_order(co):
 
 
 def print_order_with_indexes(co):
+    # if order is empty
     if len(co) == 0:
+        # print message
         print("Your order is empty, start ordering!")
         return None
+    # print dotted line
     dotline()
     print("Your order:")
     dashline()
+    # print order headings
     titles = "{:<5}{:^10}{:<22}{:12}{}".format("Index", "Qty", "Flavour", "Price", "SUBTOTAL")
     print(titles)
     for i in range(0, len(co)):
         sub_total = co[i][0] * co[i][1]
         output = "{:2}{:<3}{:^9} {:<21}@ ${:<10.2f} " \
                  "${:3.2f}".format("", i+1, co[i][0], co[i][2], co[i][1], sub_total)
+        # print order with index numbers
         print(output)
     dashline()
     receipt_calc(co)
 
 
 def add_to_order(p, co):
+    # print pizza options
     pizza_options(p)
+    # print dotted line
     dotline()
     print("Add to order: ")
     dotline()
     run = False
     while run is False:
+        # ask for item number from menu
         input_1 = get_validated_integer("Please enter an item number from the menu above: -> ", 1, len(p))
         input_1 = input_1 - 1
         chosen_pizza = p[input_1][1]
+        # ask for quantity of pizzas
         input_2 = get_integer_conformation("How many {} pizza's would you like? -> ".format(chosen_pizza), 1, 10)
-        temp_list = (input_2, p[input_1][0], chosen_pizza)
+        # create a temporary list
+        temp_list = [input_2, p[input_1][0], chosen_pizza]
+        # append temporary list to main order
         co.append(temp_list)
+        # ask to repeat the loop and add another pizza
         choice = get_validated_string("Add another pizza? y/n : ", 1, 1).upper()
         if choice == "Y":
+            # if choice is yes, continue the loop and rerun
             continue
         elif choice == "N":
             starline()
+            # if choice is no, print order
             print_order(co)
             return None
         else:
@@ -117,6 +141,7 @@ def add_to_order(p, co):
 
 
 def change_quantity(co):
+    # get index number of pizza to change
     index = get_validated_integer(
         "Please enter the index number of the pizza you would like to change the quantity of: -> ", 1, len(co))
     print("You currently have {} {} pizza/s in your order".format(co[index-1][0], co[index-1][2]))
@@ -143,6 +168,21 @@ def remove_pizza(co):
 
 
 def update_menu(p, co):
+    """Run update menu.
+
+            Set menu options, print menu.
+            Get user input, if {} letter is chosen, send to {} function.
+            Quit option to exit loop.
+            returns None
+            --------------
+            :return: None
+            --------------
+            L: list of lists, sub-list is [int, int, str]
+            --------------
+            Two dimensional list:
+            the sub-list has two items in it, [integer, string]
+            --------------
+        """
     my_menu = [
         ("C", "Change a quantity"),
         ("R", "Remove a Pizza"),
@@ -152,7 +192,6 @@ def update_menu(p, co):
     run = True
     while run is True:
         print("Review Order")
-        dotline()
         print_order_with_indexes(co)
         # print main menu
         for i in range(0, len(my_menu)):
@@ -171,9 +210,22 @@ def update_menu(p, co):
             starline()
             add_to_order(p, co)
         elif choice == "Q":
-            starline()
+            return None
         else:
             return None
+
+def cancel_order():
+    message = "Are you sure you want to cancel your order? Y/N -> "
+    choice = get_validated_string(message, 1, 1).upper()
+    if choice == "Y":
+        customer_order = []
+        print("Your order has been cancelled.")
+        print("Welcome to Pete's Pizzas, please start your order!")
+    elif choice == "N":
+        return None
+    else:
+        print("Please enter Y yes or N no: -> ")
+
 
 
 def main_function():
@@ -191,7 +243,7 @@ def main_function():
         Two dimensional list:
         the sub-list has two items in it, [integer, string]
         --------------
-        """
+    """
     starline()
     pizzas = [
         [18.50, "BBQ Chicken", "Description"],
@@ -199,6 +251,12 @@ def main_function():
         [18.50, "Cheese and Garlic", "Description"],
         [25.50, "Chicken and Brie", "Description"],
         [25.50, "Steak and Kumara", "Description"]
+        [25.50, "Shrimp Scampi", "Description"],
+        [25.50, "Steak and Kumara", "Description"],
+        [25.50, "Steak and Kumara", "Description"],
+        [25.50, "Steak and Kumara", "Description"],
+        [25.50, "Steak and Kumara", "Description"],
+        [25.50, "Steak and Kumara", "Description"],
     ]
 
     customer_order = []
@@ -212,11 +270,13 @@ def main_function():
 
     my_menu = [
         ("M", "See Menu"),
-        ("A", "Add to order"),
+        ("A", "Add to Order"),
         ("R", "Review Order"),
+        ("C", "Cancel Order"),
         ("Q", "Quit"),
         ("T", "Test"),
         ]
+    print("Welcome to Pete's Pizzas, please start your order!")
     run = True
     while run is True:
         print("Main Menu")
@@ -240,6 +300,10 @@ def main_function():
         elif choice == "R":
             starline()
             update_menu(pizzas, customer_order)
+            starline()
+        elif choice == "C":
+            starline()
+            cancel_order()
             starline()
         elif choice == "T":
             print("test")
