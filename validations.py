@@ -42,6 +42,28 @@ def get_validated_string(m, min, max):
             return string
 
 
+def get_validated_string_Y_N(m, min, max):
+    """
+    to ensure a valid string is returned of a
+    single letter in the list, Y or N.
+    tests for min and max character len,
+    3 arguments: string message, min int, max int
+    """
+    while True:
+        choice = input(m).upper()
+        choice = choice.replace(" ", "")
+        if len(choice) < min:
+            print("You have not entered enough characters, please enter 1.")
+        elif len(choice) > max:
+            print("You have entered too many characters, please enter 1.".format(max))
+        elif choice in ["Y", "N"]:
+            return choice
+        else:
+            print("Your input is invalid please choose y/n.")
+
+
+
+
 #currently not being used - delete later
 def single_entry_integer(m, min, max):
     while True:
@@ -82,9 +104,55 @@ def get_integer_conformation(m, min, max):
             return number
 
 
+def get_address(m, min, max):
+    """
+    to ensure a valid street address is returned,
+    tests for min and max character len,
+    3 arguments: string message, min int, max int
+    """
+    while True:
+        string = input(m)
+        if len(string) < min:
+            print("You have not entered enough characters")
+        elif len(string) > max:
+            print("You can only enter {} character/s".format(max))
+        else:
+            return string
+
+
+
+def get_validated_phone(m, min, max):
+    """
+        to ensure only a valid string of numbers
+        is returned.
+        tests for min and max character len,
+        3 arguments: string message, min int, max int
+        """
+    while True:
+        choice = input(m)
+        choice = choice.replace(" ", "")
+        if len(choice) < min:
+            print("You have not entered enough characters")
+            continue
+        elif len(choice) > max:
+            print("You can only enter {} character/s".format(max))
+            continue
+        not_numbers = False
+        for i in range(0, len(choice)):
+            if choice[i] not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "+"]:
+                not_numbers = True
+        if not_numbers == True:
+            print("You should not have any letters in your phone number.")
+            continue
+
+
+
+
 
 
 if __name__ =="__main__":
-    get_integer_conformation("Please enter your number of pizzas : -> ", 1, 9)
+    # get_integer_conformation("Please enter your number of pizzas : -> ", 1, 9)
+    # get_validated_string_Y_N("Enter y, n", 1, 1)
+    get_validated_phone("Phone number -> ", 1, 12)
 
 

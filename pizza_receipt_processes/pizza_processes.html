@@ -22,8 +22,8 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="header">
-				<h1 class="header-heading" style="background-color: #999">Pizza Receipt Planning and Processes</h1>
+			<div class="header" style="background-color: rgb(128,128,128);">
+				<h1 class="header-heading" style="background-color: rgb(128,128,128);">Pizza Receipt Planning and Processes</h1>
 			</div>
 			<div class="nav-bar">
 				<ul class="nav">
@@ -43,7 +43,7 @@
 			
                     
 					<h1>Brief</h1>
-                <p>I would like to create a program which allows a user to create a pizza order. I want it to consist of components that allow the user to view the menu, add items to their order and provide contact details for a either a pick up or delivery order. The prgram should be easy to navigate and make sense to the user. It shouldn't crash or end without the user's choice eg. use loops.</p>
+                <p>I would like to create a program which allows a user to create a pizza order. I want it to consist of components that allow the user to view the menu, add items to their order and provide contact details for a either a pick up or delivery order. The program should be easy to navigate and make sense to the user. It shouldn't crash or end without the user's choice eg. use loops.</p>
 					<hr>
                 <h3> Project backlog - overall overview and ideas</h3>
                 <p> Not everything on the project back log can and will be completed however all of my ideas are in one place. They are prioritised in order of importance to the program.</p>
@@ -214,32 +214,37 @@
 
     <h3>Reflection - What could I do better next time, how can I make it better etc.  </h3>
     <p>-------------------------------</p>
+                    
+    
+    <!-- Sprint seven --------------------------------------------------------------------------->            
+    <h1 id="5">Sprint Seven</h1>
+    <h3>Aim: To add a pick up or delivery option which adds an extra charge when delivery is chosen. User can enter details such as name and contact number for both pick up and delivery, and provide delivery information if they choose that option.  </h3>
+    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <h3>Sprint plan and backlog</h3>
+                <img class="img-responsive" src="assets/img/sprint_7_kanban.jpg" alt="">
+    <h3>Creating the function</h3>
+                <img class="img-responsive" src="assets/img/sprint_5_calculator_function.jpg" alt="">
+                <p> I decided to include both the total price calculator function and the GST function in one because it was easier than making them seperate. This saved me space and time because all I had to do was add an extra line of code. </p>
+                <img class="img-responsive" src="assets/img/sprint_5_new_print_order.jpg" alt=""> <p> coloumn 2</p>
+    <h3>Testing the function</h3>
+                <img class="img-responsive" src="assets/img/sprint_5_print_order_test.jpg" alt="">
+                <p> Here is a test of my new and improved print order function. It now includes the calculator and prints out the quantity, flavour, price, sub total, total price and included GST of the pizza's in the customer order. I have added a test option in my main menu in order to test my program without having to add new pizza's to my order every time I want to use my print order function before it's fully polished.</p>
+   
+    <h3>Reflection - What could I do better next time, how can I make it better etc.  </h3>
+    <p>-------------------------------</p>
 
                     
         <h1 id="7">Relevant Implications</h1>  
-                    <h3> What are they and why do we need to address </h3>
-                    <p>Usability: describe it <br>
-can the user recognise. diagnose and recover from errors - error messages<br>
-can the application correct errors and not have to worry about the user - validations<br>
-restore a previous state (back options)<br>
-address with visibility of system status (error messages)
-<br><br>
-Functionality: describe it<br>
-a working program functions well<br>
-is it free from bugs?<br>
-does it not crash?<br>
-does it add up and store values correctly<br>
-testing to find bugs before the program is finished<br>
-addressed by regular testing individual functions as well as their integration into the main program<br>
-more extensive tests - designed and executed - testing with a story - order scenarios/stories<br><br>
+                    <h3> Usability </h3>
+                    <p>Usability is how easy and usable the program is to someone who has never used it before, ie. a customer. A user should be able to recognise, diagnose and recover from errors without it disrupting the flow of the program, however even better, the application should be able to fix minor errors without the user knowing. To address this implication, I have implemented error messages throughout my program, which tell the user what they have done wrong and what should have been entered in a clear and understandable language. By adding parameters to validation functions such as ‘get_validated_string’, I am able to create an error message, specific to the information I am asking for such as ‘You have entered too many characters, please try again’. This feedback allows the user to recognise their error and gives them a chance to re enter their information to the correct standard.  </p>
 
-Future proofing: describe<br>
-is it easy to update or add new features to the program<br>
-can a different programmer do this<br>
-is the code ‘easy to understand’ - clear, correctly played out<br>
-addressed - built around a function structure, new feature = new function which can be ‘easily’ integrated into the main program<br>
-addressed - comments and doc strings to describe the purpose of the functions and other sections of code so another programmer can quickly understand what is happening <br>
-use of code checker - ensures tab indents, spacing, line lengths to fit with python conventions</p>
+<h3>Functionality</h3>
+<p>
+The relevant implication, functionality, is about making sure my program works correctly without interfering with the users experience. This means that it doesn't crash, it adds up and stores values correctly and is free from bugs. Throughout the process of creating my program, I have addressed this implication by completing regular tests on the functions by themselves, before inserting them into the main program. This is to ensure they are executing correctly and making no errors. I also tested the main program each time I added a new function to ensure it had been inserted correctly and was working properly inside the program. On top of this, I tested my program with more extensive tests which were designed and executed like a story, with a customer ordering like they would over the phone. This allowed me to experience the users story by following a customers wishes and seeing how my program would work in the real world. By testing each function individually and then as part of the main program, it allowed me to find any bugs or errors that could stop the program running properly which would interfere with the users experience. Testing with user stories also allowed me to learn about the user and make the program function for them. 
+ </p>
+
+<h3>Future proofing</h3>
+<p>Future proofing is making the code accessible to yourself and others to edit, change and update in the future. To address this implication, I have built my program using a function structure, where a new feature = a new function which can be easily integrated into the main function. This means that if a certain part of the program isn’t working, it is easy to find the problem and fix it because it won’t be woven into a whole string of messy code. Another way I have addressed this, is by commenting my code and adding doc strings to the beginning of each function. Docstrings describe the function and what it does which makes it easier for others to know what the code does, when looking at it with new eyes. Commenting the code also helps users to understand what a particular lineo the code is doing, for instance calculating GST. I have also run my code through a ‘code checker’ which ensures that tab indents, spacing and line lengths fit with the correct Python conventions. </p>
                     
                     
                     

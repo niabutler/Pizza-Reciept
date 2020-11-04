@@ -1,4 +1,4 @@
-from validations import get_validated_integer, get_validated_string
+from validations import get_validated_integer, get_validated_string, get_address
 import math
 
 
@@ -148,22 +148,6 @@ def receipt_calc(co):
     print("${}".format(total_cost))
 
 
-def print_order(co):
-    if len(co) == 0:
-        print("Your order is empty, start ordering!")
-        return None
-    print("Your order:")
-    print("Name: {}".format(co[i][3]))
-    dashline()
-    titles = "{:<5}  {:<20}  {:12} {}".format("Qty", "Flavour", "Price", "SUBTOTAL")
-    print(titles)
-    for i in range(0, len(co)):
-        sub_total = co[i][0] * co[i][1]
-        output = "x{:<5} {:<20} @ ${:<10.2f} ${:3.2f}".format(co[i][0], co[i][2], co[i][1], sub_total)
-        print(output)
-    dashline()
-    receipt_calc(co)
-
 def change_quantity():
     co = [
         [18.50, 3, "BBQ Chicken", "Description"],
@@ -180,6 +164,7 @@ def change_quantity():
     print("Your order now has {} {} pizza's".format(new_quan, co[index-1][1]))
     co[index - 1][1] = new_quan
     return None
+
 
 def remove_pizza():
     co = [
@@ -287,7 +272,81 @@ def update_menu(p, co):
         else:
             return None
 
-def checkout():
+
+
+def print_order(co, cd):
+    if len(co) == 0:
+        print("Your order is empty, start ordering!")
+        return None
+    starline()
+    print("Your order:")
+    dashline()
+    print("{}".format(cd[0]))
+    print("{}".format(cd[2], cd[3], cd[4], cd[5]))
+    print("{}".format(cd[1]))
+    dashline()
+    titles = "{:<5}  {:<20}  {:12} {}".format("Qty", "Flavour", "Price", "SUBTOTAL")
+    print(titles)
+    for i in range(0, len(co)):
+        sub_total = co[i][0] * co[i][1]
+        output = "x{:<5} {:<20} @ ${:<10.2f} ${:3.2f}".format(co[i][0], co[i][2], co[i][1], sub_total)
+        print(output)
+    dashline()
+    receipt_calc(co)
+
+
+
+def print_order_with_indexes(co, cd):
+    # if order is empty
+    if len(co) == 0:
+        # print message
+        print("Your order is empty, start ordering!")
+        return None
+    # print dotted line
+    dotline()
+    print("Your order:")
+    dashline()
+    print("{}".format(cd[0]))
+    print("{}".format(cd[2], cd[3], cd[4], cd[5]))
+    print("{}".format(cd[1]))
+    dashline()
+    # print order headings
+    titles = "{:<5}{:^10}{:<22}{:12}{}".format("Index", "Qty", "Flavour", "Price", "SUBTOTAL")
+    print(titles)
+    for i in range(0, len(co)):
+        sub_total = co[i][0] * co[i][1]
+        output = "{:2}{:<3}{:^9} {:<21}@ ${:<10.2f} " \
+                 "${:3.2f}".format("", i+1, co[i][0], co[i][2], co[i][1], sub_total)
+        # print order with index numbers
+        print(output)
+    dashline()
+    receipt_calc(co)
+
+
+def print_order_pickup(co, cd):
+    if len(co) == 0:
+        print("Your order is empty, start ordering!")
+        return None
+    starline()
+    print("Your order:")
+    dashline()
+    print("{}".format(cd[0]))
+    print("{}".format(cd[1]))
+    dashline()
+    titles = "{:<5}{:^10}{:<22}{:12}{}".format("Index", "Qty", "Flavour", "Price", "SUBTOTAL")
+    print(titles)
+    for i in range(0, len(co)):
+        sub_total = co[i][0] * co[i][1]
+        output = "{:2}{:<3}{:^9} {:<21}@ ${:<10.2f} " \
+                 "${:3.2f}".format("", i+1, co[i][0], co[i][2], co[i][1], sub_total)
+        # print order with index numbers
+        print(output)
+    dashline()
+    receipt_calc(co)
+
+
+
+def checkout(co, cd):
     my_menu = [
         ("P", "Pick up"),
         ("D", "Delivery")
@@ -301,23 +360,88 @@ def checkout():
         if choice == "P":
             name = get_validated_string("Please enter your name: -> ", 1, 15).upper()
             number = get_validated_string("Please enter a contact number (mobile): -> ", 1, 15)
-            cd1 = [name, number]
-            print(cd1)
+            cd = [name, number]
+            print_order_pickup(co, cd)
         elif choice == "D":
             name = get_validated_string("Please enter your name: -> ", 1, 15).upper()
             mobile = get_validated_string("Please enter a contact number (mobile): -> ", 1, 12)
             number = get_validated_string("Please enter your street number: ", 1, 3)
-            street = get_validated_string("Please enter your street name: ", 3, 15)
+            street = get_address("Please enter your street name: ", 3, 15)
             suburb = get_validated_string("Please enter your suburb: ", 3, 15)
             postcode = get_validated_string("Please enter your postcode: ", 4, 4)
-            cd2 = [name, mobile, number, street, suburb, postcode]
-            print(cd2)
+            cd = [name, mobile, number, street, suburb, postcode]
+            print_order_with_indexes(co, cd)
         else:
             print("Please enter P or D")
 
+def add_to_order(p, co, cd):
+    # print pizza options
+    pizza_options(p)
+    # print dotted line
+    dotline()
+    print("Add to order: ")
+    dotline()
+    run = False
+    while run is False:
+        # ask for item number from menu
+        input_1 = get_validated_integer("Please enter an item number from the menu above: -> ", 1, len(p))
+        input_1 = input_1 - 1
+        chosen_pizza = p[input_1][1]
+        # ask for quantity of pizzas
+        duplicate = dupilcate_check(co, chosen_pizza)
+        if duplicate == None:
+            input_2 = get_integer_conformation("How many {} pizza's would you like? -> ".format(chosen_pizza), 1, 10)
+            # create a temporary list
+            temp_list = [input_2, p[input_1][0], chosen_pizza]
+            # append temporary list to main order
+            co.append(temp_list)
+            # ask to repeat the loop and add another pizza
+            choice = get_validated_string("Add another pizza? y/n : ", 1, 1).upper()
+            if choice == "Y":
+                # if choice is yes, continue the loop and rerun
+                continue
+            elif choice == "N":
+                starline()
+                # if choice is no, print order
+                print_order(co,cd)
+                return None
+            else:
+                print("Your input is invalid please choose y/n.")
+        else:
+            return None
+
+
+customer_details_temp = ["Nia", "032736449", 74, "Makara Road", "Makara", 6732, "delivery"]
+customer_order_temp = [
+    [3, 18.5, "BBQ Chicken"],
+    [2, 18.5, "Cheese and Garlic"],
+    [1, 18.5, "Steak and Kumara"],
+    [2, 25.5, "Hawaiian"],
+    ]
+temp_list = [3, 25.5 , "Hawaiian"]
+
+
+def dupilcate_check(co, cp):
+    for i in range(0,len(co)):
+        if cp == co[i][2]:
+            choice = get_validated_string("You have already ordered {} of these pizzas, "
+                  "would you like to change the quantity? Y or N -> ".format(co[1][0]), 1, 1)
+            if choice == "Y":
+                number = get_integer_conformation("How many {} pizza's would you like to order? -> ".format(co[i][2]), 1, 10)
+                co[i][0] = number
+                print("You now have {} {} pizzas".format(number, cp))
+                return True
+            elif choice == "N":
+                print("N")
+                return False
+    return None
 
 
 
+
+dupilcate_check(customer_order_temp, "Hawaiian")
+
+#customer_details = []
 
 #print_pizzas(pizzas)
 #main_function()
@@ -328,5 +452,5 @@ def checkout():
 #change_quantity()
 #remove_pizza()
 #update_menu(pizzas, customer_order)
-checkout()
+#checkout(customer_order, customer_details)
 
