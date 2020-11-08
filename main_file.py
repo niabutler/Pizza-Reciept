@@ -1,49 +1,77 @@
 """Pizza Ordering programme."""
 from validations import get_validated_integer, \
     get_validated_string, get_integer_conformation, \
-    get_address, get_validated_string_Y_N, \
+    get_address, get_validated_string_y_n, \
     get_validated_phone
 
 
 def starline():
+    """Print starred line.
+
+    Print starred line
+    --------------
+    :return: None
+    --------------
+    """
     # print line of 100 stars
     print("*" * 100)
 
 
 def dashline():
+    """Print dashed line.
+
+    Print dashed line
+    --------------
+    :return: None
+    --------------
+    """
     # print line of 100 dashes
     print("-" * 100)
 
 
 def dotline():
+    """Print dotted line.
+
+    Print dotted line
+    --------------
+    :return: None
+    --------------
+    """
     # print line of 100 dots
     print("." * 100)
 
 
 def print_menu(m):
+    """Print Main Menu.
+
+    Print menu options.
+
+    :param: m (my_menu, a list of letters associated to a menu item)
+    :return: None
+    """
     # print menu, formatted
     for i in range(0, len(m)):
         output = "{}: {}".format(m[i][0], m[i][1])
         print(output)
 
 
-def print_pizzas(p):
-    # print pizza menu with prices
-    print("PIZZA MENU")
-    dotline()
-    for i in range(0, len(p)):
-        # print price and name of pizzas
-        output = ("${}0   {}".format(p[i][0], p[i][1]))
-        print(output)
-
-
 def pizza_options(p):
+    """Print pizza menu.
+
+    Print titles.
+    For the length of the pizza menu,
+    print index numbers, name, price and description.
+
+    :param: p (pizza_menu, a multidimensional list of pizza names,
+    prices and descriptions)
+    :return: None
+    """
     # print pizza menu with indexes
     print("PIZZA MENU")
     dotline()
     # print headings above the information to make it easier to understand
-    titles = "{:5}   {:22} {:14}  {}".format \
-        ("Item no.", "Name", "Price", "Description")
+    titles = "{:5}   {:22} {:14}  {}".\
+        format("Item no.", "Name", "Price", "Description")
     print(titles)
     # print in order: index number +1, space, name, space,
     # description and price
@@ -54,6 +82,20 @@ def pizza_options(p):
 
 
 def print_order(co):
+    """Print customer order.
+
+    Check to see if customer order has anything in it. If not, print message
+    If customer order = > 1, print titles.
+    For the length of the customer order,
+    sub total = the price times the quantity of each pizza flavour
+    print pizzas with quantity,
+    price and sub total. Set extra to 0.
+    Call Receipt calculator.
+
+    :param: co (customer_order, a list of names, prices and
+    quantities of pizzas chosen by the customer )
+    :return: None
+    """
     if len(co) == 0:
         # print message if order is empty
         print("Your order is empty, start ordering!")
@@ -76,12 +118,26 @@ def print_order(co):
 
 
 def print_order_with_indexes(co):
+    """Print customer order with indexes.
+
+    Check if length of customer is 0. If so, print message.
+    If customer order = > 1, print titles.
+    For the length of the customer order,
+    sub total = the price times the quantity of each pizza flavour
+    print pizzas with index numbers, quantity,
+    price and sub total. Set extra to 0.
+    Call Receipt calculator.
+
+    :param: co (customer_order, a multidimensional list of names, prices and
+    quantities of pizzas chosen by the customer)
+    :return: None
+    """
     # if order is empty
-    if len(co) is 0:
+    if len(co) == 0:
         # print message
         print("Your order is empty, start ordering!")
         starline()
-        return None
+        return False
     # print dotted line
     dotline()
     print("YOUR ORDER:")
@@ -104,12 +160,26 @@ def print_order_with_indexes(co):
 
 
 def duplicate_check(co, cp):
+    """Scan customer list for duplicate values.
+
+    Search for same terms in customer order.
+    If same, print message and request customer input.
+    If yes, ask to change quantity and replace new
+    quantity with old quantity. Returns True.
+    If no, returns False
+
+    :param: co, cp (customer_order, a list of names, prices and
+    quantities of pizzas chosen by the customer. chosen_pizza,
+    a pizza name chosen by the customer)
+    :return: bool
+    """
     for i in range(0, len(co)):
         if cp is co[i][2]:
-            choice = get_validated_string("You have already "
+            choice = get_validated_string_y_n("You have already "
                                           "ordered this flavour of pizza, "
-                                          "would you like to change the quantity? Y "
-                                          "or N -> ", 1, 1).upper()
+                                          "would you like to change the "
+                                          "quantity? Y or N -> ", 1, 1).\
+                upper()
             if choice is "Y":
                 updated = get_integer_conformation("How many {} "
                                                    "pizza's would you "
@@ -122,12 +192,24 @@ def duplicate_check(co, cp):
                 print_order(co)
                 return True
             elif choice is "N":
-                print("N")
                 return False
     return None
 
 
-def add_to_order(p, co, cd):
+def add_to_order(p, co):
+    """Add a new pizza to the customer order.
+
+    Print pizza menu. Request index number to add pizza.
+    Run duplicate function. Request quantity of pizzas.
+    Create list with pizza and quantity and append to customer_order.
+    Ask to add another pizza or not. If yes, continue.
+    If no, print order.
+
+    :param: p, co (pizza_menu, a multidimensional list of pizza names,
+    prices and descriptions. customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer)
+    :return: None
+    """
     # print pizza options
     pizza_options(p)
     # print dotted line
@@ -143,7 +225,7 @@ def add_to_order(p, co, cd):
         chosen_pizza = p[input_1][1]
         # ask for quantity of pizzas
         duplicate = duplicate_check(co, chosen_pizza)
-        if duplicate == None:
+        if duplicate is None:
             input_2 = get_integer_conformation("How many {} pizza's "
                                                "would you like? -> "
                                                .format(chosen_pizza), 1, 10)
@@ -152,7 +234,7 @@ def add_to_order(p, co, cd):
             # append temporary list to main order
             co.append(temp_list)
             # ask to repeat the loop and add another pizza
-        choice = get_validated_string_Y_N("Add another pizza? y/n : ", 1, 1)
+        choice = get_validated_string_y_n("Add another pizza? y/n : ", 1, 1)
         if choice == "Y":
             # if choice is yes, continue the loop and rerun
             continue
@@ -166,6 +248,17 @@ def add_to_order(p, co, cd):
 
 
 def change_quantity(co):
+    """Update/change quantity of pizza in customer order.
+
+    Request index number to change. Print message.
+    Request new number of pizzas.
+    Replace old number with new number.
+    Print conformation. Returns none
+
+    :param: co (customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer)
+    :return: None
+    """
     # get index number of pizza to change
     index = get_validated_integer(
         "Please enter the index number of the pizza you would "
@@ -173,15 +266,26 @@ def change_quantity(co):
     print("You currently have {} {} pizza/s in "
           "your order".format(co[index-1][0], co[index-1][2]))
     new_quan = get_integer_conformation(
-        "How many {} pizza's would you like?: -> "
-            .format(co[index-1][2]), 1, 25)
-    print("Your order now has {} {} pizza's"
-          .format(new_quan, co[index-1][2]))
+        "How many {} pizza's would you like?: -> ".
+         format(co[index-1][2]), 1, 25)
+    print("Your order now has {} {} pizza's".
+          format(new_quan, co[index-1][2]))
     co[index - 1][0] = new_quan
     return None
 
 
 def remove_pizza(co):
+    """Remove a pizza from the customer order.
+
+    Ask for index number of pizza to remove.
+    Print message. Ask for user conformation.
+    if yes, remove row from customer order. Print order.
+    If no, returns none.
+
+    :param: co (customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer)
+    :return: None
+    """
     # set message
     message = "Please enter the index number of the pizza flavour " \
               "you would like to remove from your order: -> "
@@ -191,7 +295,7 @@ def remove_pizza(co):
     # get customer conformation... are you sure?
     message = "Are you sure you would like to remove all {} " \
               "pizza's from your order? Y/N -> ".format(co[index - 1][2])
-    choice = get_validated_string(message, 1, 1).upper()
+    choice = get_validated_string_y_n(message, 1, 1).upper()
     if choice == "Y":
         # if choice is 'Y' yes, remove pizza with {} index number from order
         co.pop(index - 1)
@@ -203,25 +307,21 @@ def remove_pizza(co):
         print("Please enter 'Y' yes or 'N' no: -> ")
 
 
-def print_final_reciept(co,cd):
+def print_final_receipt(co, cd):
     """Print final receipt (with delivery charges).
 
-                   Look for "delivery" in customer details list.
-                   If there, print relevant customer details incl address,
-                   set extra charges to $3.50,
-                   print the order with delivery charges added, final cost and GST.
-                   If not there, print relevant customer details,
-                   print order with final cost and GST
+    Look for "delivery" in customer details list.
+    If there, print relevant customer details incl address,
+    set extra charges to $3.50,
+    print the order with delivery charges added, final cost and GST.
+    If not there, print relevant customer details,
+    print order with final cost and GST
 
-                   --------------
-                   :return: None
-                   --------------
-                   L: list of lists, sub-list is [int, int, str]
-                   --------------
-                   Two dimensional list:
-                   the sub-list has two items in it, [integer, string]
-                   --------------
-               """
+    :param: co, cd (customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer.
+    customer_details, a multidimensional list of customers name, and relevant details)
+    :return: None
+    """
     if len(co) == 0:
         # print if order is empty
         print("Your order is empty, start ordering!")
@@ -280,23 +380,20 @@ def print_final_reciept(co,cd):
         receipt_calc(co, 0)
 
 
-def receipt_calc(co,extra):
+def receipt_calc(co, extra):
     """Calculate final cost, GST and extra charges.
 
-                   Total cost is set to 0. For the length of the list,
-                   the total cost is += to the quantity of
-                   pizzas times the price for each flavour plus
-                   extra charges for delivery.
-                   GST is calculated using 3/23.
-                   --------------
-                   :return: None
-                   --------------
-                   L: list of lists, sub-list is [int, int, str]
-                   --------------
-                   Two dimensional list:
-                   the sub-list has two items in it, [integer, string]
-                   --------------
-               """
+    Total cost is set to 0. For the length of the list,
+    the total cost is += to the quantity of
+    pizzas times the price for each flavour plus
+    extra charges for delivery.
+    GST is calculated using 3/23.
+
+    :param: co, extra (customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer.
+    extra, delivery charge)
+    :return: None
+    """
     # set total cost to 0
     total_cost = 0
     for i in range(0, len(co)):
@@ -312,22 +409,17 @@ def receipt_calc(co,extra):
 def checkout(co):
     """Finalise order and checkout.
 
-               set menu options, either pickup or delivery.
-               Ask user for input.
-               If P, ask for limited details.
-               Create list and add to customer details (cd). Print final receipt.
-               If D, ask for appropriate details.
-               Create list and add to customer details (cd). Print final receipt.
+    set menu options, either pickup or delivery.
+    Ask user for input.
+    If P, ask for limited details.
+    Create list and add to customer details (cd). Print final receipt.
+    If D, ask for appropriate details.
+    Create list and add to customer details (cd). Print final receipt.
 
-               --------------
-               :return: None
-               --------------
-               L: list of lists, sub-list is [int, int, str]
-               --------------
-               Two dimensional list:
-               the sub-list has two items in it, [integer, string]
-               --------------
-           """
+    :param: co (customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer)
+    :return: bool
+    """
     if len(co) == 0:
         # no pizza's in list
         print("Your order is empty, start ordering!")
@@ -356,7 +448,7 @@ def checkout(co):
             # create list with customer details
             cd = [name, number, "pickup", "", "", "", ""]
             # print receipt
-            print_final_reciept(co, cd)
+            print_final_receipt(co, cd)
             print("Thank you for stopping by Pete's Pizza's, your food will "
                   "be ready shortly!")
             starline()
@@ -365,19 +457,23 @@ def checkout(co):
             print("Payment can be made on delivery.")
             dashline()
             # get relevant customer details for delivery
-            name = get_validated_string("Please enter your name: -> ", 1, 15).upper()
+            name = get_validated_string("Please enter your name: -> ", 1, 15).\
+                upper()
+            # get validated phone number
             mobile = get_validated_phone("Please enter a contact number "
                                          "(mobile): -> ", 9, 12)
-            number = get_validated_string("Please enter your street number: ", 1, 3)
+            number = get_validated_string("Please enter your street "
+                                          "number: ", 1, 3)
             street = get_address("Please enter your street name: ", 3, 15)
             suburb = get_validated_string("Please enter your suburb: ", 3, 15)
-            postcode = get_validated_string("Please enter your postcode: ", 4, 4)
+            postcode = get_validated_string("Please enter your "
+                                            "postcode: ", 4, 4)
             # create list with customer details
             cd = [name, mobile, number, street, suburb, postcode, "delivery"]
             # print receipt
-            print_final_reciept(co, cd)
-            print("Thank you for stopping by Pete's Pizza's, your food will be "
-                  "with you shortly!")
+            print_final_receipt(co, cd)
+            print("Thank you for stopping by Pete's Pizza's, "
+                  "your food will be with you shortly!")
             starline()
             return True
         else:
@@ -387,21 +483,19 @@ def checkout(co):
 def update_menu(p, co, cd):
     """Run update menu.
 
-            Set menu options, print menu.
-            Get user input, if {} letter is chosen, send to {} function.
-            Quit option to exit loop.
-            returns None
-            User is able to update their order by adding,
-            removing and changing quantities of pizza's
-            --------------
-            :return: None
-            --------------
-            L: list of lists, sub-list is [int, int, str]
-            --------------
-            Two dimensional list:
-            the sub-list has two items in it, [integer, string]
-            --------------
-        """
+    Set menu options, print menu.
+    Get user input, if {} letter is chosen, send to {} function.
+    Quit option to exit loop.
+    returns None
+    User is able to update their order by adding,
+    removing and changing quantities of pizza's
+
+    :param: p, co, cd (pizza_menu, a multidimensional list of pizza names,
+    prices and descriptions. customer_order, a multidimensional list of
+    names, prices and quantities of pizzas chosen by the customer.
+    customer_details, a multidimensional list of customers name, and relevant details)
+    :return: None, bool
+    """
     my_menu = [
         ("C", "Change a quantity"),
         ("R", "Remove a Pizza"),
@@ -411,33 +505,47 @@ def update_menu(p, co, cd):
     run = True
     while run is True:
         print("REVIEW ORDER")
-        print_order_with_indexes(co)
-        # print main menu
-        for i in range(0, len(my_menu)):
-            output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
-            print(output)
-        # ask for user's choice as input
-        choice = get_validated_string("Please choose an option: -> ",
-                                      1, 1).upper()
-        if choice == "C":
-            starline()
-            change_quantity(co)
-            starline()
-        elif choice == "R":
-            starline()
-            remove_pizza(co)
-        elif choice == "A":
-            starline()
-            add_to_order(p, co, cd)
-        elif choice == "Q":
-            return None
+        if len(co) == 0:
+            print("Your order is empty, please start ordering!")
+            return False
         else:
-            return None
+            run = print_order_with_indexes(co)
+            # print main menu
+            for i in range(0, len(my_menu)):
+                output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
+                print(output)
+            # ask for user's choice as input
+            choice = get_validated_string("Please choose an option: -> ",
+                                          1, 1).upper()
+            if choice == "C":
+                starline()
+                change_quantity(co)
+                starline()
+            elif choice == "R":
+                starline()
+                remove_pizza(co)
+            elif choice == "A":
+                starline()
+                add_to_order(p, co, cd)
+            elif choice == "Q":
+                return None
+            else:
+                return None
 
 
 def cancel_order():
+    """Cancel order.
+
+    Ask for user conformation,
+    if user chooses to continue,
+    returns True
+    if not,
+    returns False
+
+    :return: bool
+    """
     message = "Are you sure you want to cancel your order? Y/N -> "
-    choice = get_validated_string(message, 1, 1).upper()
+    choice = get_validated_string_y_n(message, 1, 1).upper()
     if choice == "Y":
         dashline()
         print("Your order has been cancelled.")
@@ -452,18 +560,12 @@ def cancel_order():
 def main_function():
     """Run main menu.
 
-        Set pizza list, set customer order, set menu options, print menu.
-        Get user input, if {} letter is chosen, send to {} function.
-        Quit option to exit loop.
-        returns None
-        --------------
-        :return: None
-        --------------
-        L: list of lists, sub-list is [int, int, str]
-        --------------
-        Two dimensional list:
-        the sub-list has two items in it, [integer, string]
-        --------------
+    Set pizza list, set customer order, set menu options, print menu.
+    Get user input, if {} letter is chosen, send to {} function.
+    Quit option to exit loop.
+    returns None
+
+    :return: None
     """
     starline()
     pizzas = [
@@ -485,7 +587,8 @@ def main_function():
                                  "stringy mozzarella cheese and fresh herbs."],
         [25.50, "Meaty Goodness", "BBQ base with chicken, bacon, sausage, "
                                   "steak and smoky mozzarella."],
-        [25.50, "Surprise", "A pizza of the day, you don't find out until you get it!"],
+        [25.50, "Surprise", "A pizza of the day, you don't find out "
+                            "until you get it!"],
         [25.50, "Roll up", "For you and your besties to share! Tomato base, "
                            "mozzarella cheese, ham, chicken."],
     ]
@@ -505,8 +608,12 @@ def main_function():
     run = True
     while run is True:
         while start_order is True:
+            # when start_order = True,
+            # clear customer details by setting it to []
+            # clear customer order by setting it to []
             customer_order = []
             customer_details = []
+            # set start_order to false
             start_order = False
         print("Main Menu")
         dotline()
@@ -515,26 +622,43 @@ def main_function():
             output = "{}: {}".format(my_menu[i][0], my_menu[i][1])
             print(output)
         # ask for user's choice as input
-        choice = get_validated_string("Please choose an option: -> ", 1, 1).upper()
+        choice = get_validated_string("Please choose an "
+                                      "option: -> ", 1, 1).upper()
         if choice == "M":
             starline()
+            # if choice is M
+            # print pizza menu
             pizza_options(pizzas)
             starline()
         elif choice == "Q":
-            print("Thank you for choosing Pete's Pizza's! Have a nice evening :)")
+            # if choice is Q
+            # set start_order to True
+            print("Thank you for choosing Pete's Pizza's! "
+                  "Have a nice evening :)")
+            start_order is False
         elif choice == "A":
+            # if choice is A
+            # run add_to_order function
             starline()
-            add_to_order(pizzas, customer_order, customer_details)
+            add_to_order(pizzas, customer_order)
             starline()
         elif choice == "R":
+            # if choice is R
+            # run update_menu
             starline()
             update_menu(pizzas, customer_order, customer_details)
             starline()
         elif choice == "C":
+            # if choice is C
+            # set start_order to outcome
+            # of cancel_order function
             starline()
             start_order = cancel_order()
             starline()
         elif choice == "F":
+            # if choice is F
+            # set start_order to outcome
+            # of checkout function
             starline()
             start_order = checkout(customer_order)
             starline()
