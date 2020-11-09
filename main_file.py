@@ -600,7 +600,6 @@ def main_function():
         ("C", "Cancel Order"),
         ("F", "Finalise Order"),
         ("Q", "Quit"),
-        ("T", "Test"),
         ]
 
     start_order = True
@@ -662,9 +661,6 @@ def main_function():
             starline()
             start_order = checkout(customer_order)
             starline()
-        elif choice == "T":
-            print("test")
-            # print_order_with_indexes(customer_order_temp)
         else:
             print("Invalid entry, please try again.")
 
